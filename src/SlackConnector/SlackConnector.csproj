@@ -17,14 +17,6 @@
       <HintPath>..\..\..\..\packages\Flurl.Http.1.2.0\lib\net45\Flurl.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HttpMachine, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\HttpMachine.PCL.3.1.0\lib\netstandard1.0\HttpMachine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="IHttpMachine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\HttpMachine.PCL.3.1.0\lib\netstandard1.0\IHttpMachine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ISocketLite.PCL, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\SocketLite.PCL.4.1.1\lib\net45\ISocketLite.PCL.dll</HintPath>
       <Private>True</Private>
@@ -274,6 +266,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\HttpMachine.PCL\src\main\HttpMachine.csproj">
+      <Project>{70448fca-6275-4685-aa0b-8be2221c46f7}</Project>
+      <Name>HttpMachine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
