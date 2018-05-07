@@ -7,6 +7,7 @@
         public string RawData { get; set; }
         public string Text { get; set; }
         public SlackUser User { get; set; }
-        public double TimeStamp { get; set; }
+        public double Timestamp { get; set; }
+        public SlackMessageSubType MessageSubType { get; set; }
     }
 }

@@ -9,13 +9,11 @@ namespace SlackConnector
 {
     public interface ISlackConnection
     {
-        #region Properties
-
         /// <summary>
         /// All of the ChatHubs that are currently open.
         /// </summary>
         IReadOnlyDictionary<string, SlackChatHub> ConnectedHubs { get; }
-        
+
         /// <summary>
         /// UserId => User object.
         /// </summary>
@@ -46,18 +44,16 @@ namespace SlackConnector
         /// </summary>
         ContactDetails Self { get; }
 
-        #endregion
-        
         /// <summary>
-        /// Disconnect from Slack.
+        /// Close websocket connection to Slack
         /// </summary>
-        void Disconnect();
+        Task Close();
 
         /// <summary>
         /// Send message to Slack channel.
         /// </summary>
         Task Say(BotMessage message);
-        
+
         /// <summary>
         /// Uploads a file from to a Slack channel
         /// </summary>
@@ -80,10 +76,35 @@ namespace SlackConnector
         /// <returns>Users.</returns>
         Task<IEnumerable<SlackUser>> GetUsers();
 
-            /// <summary>
+        /// <summary>
         /// Opens a DM channel to a user. Required to PM someone.
         /// </summary>
         Task<SlackChatHub> JoinDirectMessageChannel(string user);
+
+        /// <summary>
+        /// Joins a channel.
+        /// </summary>
+        Task<SlackChatHub> JoinChannel(string channelName);
+
+        /// <summary>
+        /// Create a channel.
+        /// </summary>
+        Task<SlackChatHub> CreateChannel(string channelName);
+
+        /// <summary>
+        /// Archives a channel.
+        /// </summary>
+        Task ArchiveChannel(string channelName);
+
+        /// <summary>
+        /// Sets a channel purpose.
+        /// </summary>
+        Task<SlackPurpose> SetChannelPurpose(string channelName, string purpose);
+
+        /// <summary>
+        /// Sets a channel topic.
+        /// </summary>
+        Task<SlackTopic> SetChannelTopic(string channelName, string topic);
 
         /// <summary>
         /// Indicate to the users on the channel that the bot is 'typing' on the keyboard.
@@ -102,9 +123,24 @@ namespace SlackConnector
         event DisconnectEventHandler OnDisconnect;
 
         /// <summary>
+        /// Raised when attempting to reconnect to Slack after a disconnect is detected
+        /// </summary>
+        event ReconnectEventHandler OnReconnecting;
+
+        /// <summary>
+        /// Raised when a connection has been restored.
+        /// </summary>
+        event ReconnectEventHandler OnReconnect;
+
+        /// <summary>
         /// Raised when real-time messages are received.
         /// </summary>
         event MessageReceivedEventHandler OnMessageReceived;
+
+        /// <summary>
+        /// Raised when reaction messages are received.
+        /// </summary>
+        event ReactionReceivedEventHandler OnReaction;
 
         /// <summary>
         /// Raised when bot joins a channel or group
@@ -115,5 +151,15 @@ namespace SlackConnector
         /// Raised when a new user joins the team
         /// </summary>
         event UserJoinedEventHandler OnUserJoined;
+
+        /// <summary>
+        /// Raised when SlackApi sends a pong to our ping
+        /// </summary>
+        event PongEventHandler OnPong;
+
+        /// <summary>
+        /// Raised when a new channel is created
+        /// </summary>
+        event ChannelCreatedHandler OnChannelCreated;
     }
 }
