@@ -137,8 +137,10 @@ namespace SlackConnector
             if (!string.IsNullOrEmpty(Self.Id) && inboundMessage.User == Self.Id)
                 return Task.CompletedTask;
 
-            if (inboundMessage.ReactingTo is MessageReaction messageReaction)
+            if (inboundMessage.ReactingTo is MessageReaction)
             {
+                var messageReaction = inboundMessage.ReactingTo as MessageReaction;
+
                 //TODO: Interface methods? Extension methods?
                 return RaiseReactionReceived(
                     new SlackMessageReaction
@@ -152,8 +154,10 @@ namespace SlackConnector
                     });
             }
 
-            if (inboundMessage.ReactingTo is FileReaction fileReaction)
+            if (inboundMessage.ReactingTo is FileReaction)
             {
+                var fileReaction = inboundMessage.ReactingTo as FileReaction;
+
                 return RaiseReactionReceived(
                     new SlackFileReaction
                     {
@@ -166,8 +170,10 @@ namespace SlackConnector
                     });
             }
 
-            if (inboundMessage.ReactingTo is FileCommentReaction fileCommentReaction)
+            if (inboundMessage.ReactingTo is FileCommentReaction)
             {
+                var fileCommentReaction = inboundMessage.ReactingTo as FileCommentReaction;
+
                 return RaiseReactionReceived(
                     new SlackFileCommentReaction
                     {
