@@ -14,7 +14,7 @@ namespace SlackConnector.Connections.Sockets
     {
         private readonly IMessageInterpreter _interpreter;
         private readonly List<IDisposable> _subscriptions = new List<IDisposable>();
-        private IMessageWebSocketRx _webSocket;
+        private IMessageWebSocketRx _webSocket; // BUGBUG: this class should be disposable.
         private int _currentMessageId;
 
         public bool IsAlive => _webSocket.IsConnected;
@@ -50,7 +50,7 @@ namespace SlackConnector.Connections.Sockets
 
         public async Task Close()
         {
-            using (_webSocket)
+            if (_webSocket != null)
             {
                 foreach (var subscription in _subscriptions)
                 {
@@ -59,6 +59,8 @@ namespace SlackConnector.Connections.Sockets
                 _subscriptions.Clear();
 
                 await _webSocket.CloseAsync();
+                _webSocket.Dispose();
+                _webSocket = null;
             }
         }
 
