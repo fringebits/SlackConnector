@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Moq;
-using Ploeh.AutoFixture.Xunit2;
+using AutoFixture.Xunit2;
 using SlackConnector.BotHelpers;
 using SlackConnector.Connections.Sockets;
 using SlackConnector.Connections.Sockets.Messages.Inbound;
@@ -53,8 +53,9 @@ namespace SlackConnector.Tests.Unit.SlackConnectionTests.InboundMessageTests
                 Text = "amazing-text",
                 User = new SlackUser { Id = "userABC", Name = "i-have-a-name" },
                 RawData = inboundMessage.RawData,
-                MessageSubType = SlackMessageSubType.ChannelLeave
-            });
+                MessageSubType = SlackMessageSubType.ChannelLeave,
+                Files = Enumerable.Empty<SlackFile>()
+        });
         }
 
         [Theory, AutoMoqData]
@@ -88,8 +89,9 @@ namespace SlackConnector.Tests.Unit.SlackConnectionTests.InboundMessageTests
             // then
             receivedMessage.ShouldLookLike(new SlackMessage
             {
-                User = new SlackUser { Id = "userABC", Name = string.Empty }
-            });
+                User = new SlackUser { Id = "userABC", Name = string.Empty },
+                Files = Enumerable.Empty<SlackFile>()
+        });
         }
 
         [Theory, AutoMoqData]
