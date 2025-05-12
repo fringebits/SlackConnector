@@ -21,7 +21,7 @@ namespace SlackConnector
         }
 
         /// <summary>
-        /// Will try and find a channel the bot is connected to with that name, e.g. #general
+        /// Will try and find a channel the bot is connected to with that name, e.g. general
         /// </summary>
         public static SlackChatHub ConnectedChannel(this ISlackConnection slackConnection, string channelName)
         {
@@ -34,7 +34,7 @@ namespace SlackConnector
         }
 
         /// <summary>
-        /// Will try and find a channel the bot is connected to with that name, e.g. #group
+        /// Will try and find a channel the bot is connected to with that name, e.g. group
         /// </summary>
         public static SlackChatHub ConnectedGroup(this ISlackConnection slackConnection, string groupName)
         {
